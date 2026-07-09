@@ -1,4 +1,4 @@
-> [WARNING]
+> [!IMPORTANT]
 > `key.json`的内容来自WallpaperEngineWorkshopDownloader，详见[Issue 63](https://github.com/SteamAutoCracks/WallpaperEngineWorkshopDownloader/issues/63)
 
 # wallpaper-downloader
