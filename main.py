@@ -96,7 +96,7 @@ for pubfile in pubfiles:
                 pubfile=pubfile,
                 username=u,
                 password=p,
-                dir=Path(__file__).resolve().parent / "output"
+                dir=Path(__file__).resolve().parent / "output" / pubfile
             )
             if input("可以使用这个账号下载吗？(Y/n)") != "n":
                 username = u
@@ -111,5 +111,5 @@ for pubfile in pubfiles:
             pubfile=pubfile,
             username=username,
             password=passwd,
-            dir=Path(__file__).resolve().parent / "output"
+            dir=Path(__file__).resolve().parent / "output" / pubfile
         )
