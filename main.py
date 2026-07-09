@@ -66,7 +66,6 @@ def download(depotdownloader,pubfile,username,password,dir):
     process.wait()
 
 
-
 try:
     config_file = Path("config.json")
 
@@ -82,6 +81,9 @@ try:
 except FileNotFoundError:
     init()
     sys.exit()
+
+subprocess.run([depotdownloader_exec_file_path, "--version"])
+
 
 pubfiles = get_pubfiles_from_input()
 key_item = unbase64passwd(keys)
