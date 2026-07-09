@@ -1,20 +1,28 @@
+import sys
 import json
 import subprocess
+import base64
+from pathlib import Path
 
 try:
-    with open('depotdownloader_file_path.txt', 'r') as f:
-        depotdownloader_file_path = f.read().strip()
-        if depotdownloader_file_path == "":
-            raise FileNotFoundError
+    depotdownloader_config_file = Path("depotdownloader_file_path.txt")
+    key_file = Path("key.json")
+    if depotdownloader_config_file.read_text(encoding='utf-8').split() == "":
+        raise FileNotFoundError
+
 except FileNotFoundError:
-    with open('depotdownloader_file_path.txt', 'w') as f:
-        print("如果你的depotdownloader是通过包管理器安装的（如yay），则直接输入depotdownloader。否则输入绝对路径，无论系统。")
-        depotdownloader_file_path = input("请输入depotdownloader文件路径：")
-        f.write(depotdownloader_file_path)
-else:
-    print("depotdownloader_file_path:", depotdownloader_file_path)
-    subprocess.run([depotdownloader_file_path, "--version"])
+    print("如果你的depotdownloader是通过包管理器安装的（如yay），则直接输入depotdownloader。否则输入绝对路径，无论系统。")
+    depotdownloader_exec_file_path = input("请输入depotdownloader文件路径：")
+    depotdownloader_config_file.write_text(depotdownloader_exec_file_path,encoding='utf-8')
+    print("请重启")
+    sys.exit()
 
-with open('key.json', 'r') as f:
-    key = json.load(f)
+keys = key_file.read_text(encoding='utf-8')
+key_item = json.loads(keys)
+for k,v in key_item.items():
+    decoded_bytes = base64.b64decode(v)
+    decoded_str = decoded_bytes.decode('utf-8')
+    key_item[k] = decoded_str
 
+print("depotdownloader_file_path:", depotdownloader_file_path)
+subprocess.run([depotdownloader_exec_file_path, "--version"])
